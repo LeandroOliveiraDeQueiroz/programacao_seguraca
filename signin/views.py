@@ -4,7 +4,7 @@ from django.shortcuts import render
 def index(request):
     context = {
         'title':'Broken Authentication and Section',
-        'page' : 'Sign in Page',
+        'page' : 'Sign Up Page',
      }
 
     return render(request, 'sign_in_view.html', context)
