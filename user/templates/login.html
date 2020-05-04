@@ -7,19 +7,27 @@
         <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     </head>
     <body>
+        <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
         <h1 id="title">{{ title }}</h1>
         <h2>{{page}}</h2>
+        {% comment %} <h3>{{status}}</h3> {% endcomment %}
         <div>
-            <form id="loginForm">
+            {% comment %} o action no form nao e' necessa'rio porque o post e' para a mesmas URL {% endcomment %}
+            <form id="form" method="post">
+                {% csrf_token %}
                 <div class="fieldContent">
                     <label>User: </label>
-                    <input type="text" id="username"></input>
+                    {% comment %} E' o name é utilizado na identificao do request na view {% endcomment %}
+                    <input name="username" type="text" id="username" value="{{ username }}" required></input>
                 </div>
                 <div class="fieldContent">
                     <label>Password: </label>
-                    <input type="password" id="password"></input>
+                    <input name="password" type="password" id="password" value="{{ password }}" required></input>
                 </div>
                 <div>
+                    {% if status == "authenticate_fail" %}
+                        <p class="errorMensage">Usuário ou senha incorreta</p>
+                    {% endif %}
                     <input type="submit" value="Login"></input>
                 </div>
             </form>
