@@ -14,23 +14,27 @@
         <div>
             <form id="form" method="post">
                 {% csrf_token %}
-                <div class="fieldContent">
+                <div>
                     <label>User: </label>
                     <input name="username" type="text" id="username" value="{{username}}" maxlength="200" required></input>
-                    {% if status == "username_already_exists" %}
-                        <p class="errorMensage">Esse usuário já existe</p>
-                    {% endif %}
+                    <div style="height: 20px;">
+                        {% if status == "username_already_exists" %}
+                            <p class="errorMensage">Esse usuário já existe</p>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="fieldContent">
                     <label>Password:</label>
                     <input name="password" type="password" id="password" value="{{password}}" maxlength="200" required></input>
                 </div>
-                <div class="fieldContent">
+                <div>
                     <label>Confirm Password:</label>
                     <input name="password_confirm" type="password" id="password_confirm" value="{{password_confirm}}" maxlength="200" required></input>
-                    {% if status == "different_passwords" %}
-                        <p class="errorMensage">As senhas não coincidem</p>
-                    {% endif %}
+                    <div style="height: 20px;">
+                        {% if status == "different_passwords" %}
+                            <p class="errorMensage">As senhas não coincidem</p>
+                        {% endif %}
+                    </div>
                 </div>
                 <div>
                     <input type="submit" value="Sign in"></input>
