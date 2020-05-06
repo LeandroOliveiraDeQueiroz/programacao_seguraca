@@ -1,0 +1,1 @@
+web: gunicorn programacao_e_seguranca.wsgi
