@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_NAME = 'ipg'
 
 # Application definition
 
