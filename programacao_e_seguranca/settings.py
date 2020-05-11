@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import datetime
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
-    'axes',
+    # 'django_extensions',
+    # 'axes',
     'user',
 ]
 
@@ -59,16 +57,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'axes.middleware.AxesMiddleware',
+    # 'axes.middleware.AxesMiddleware',
 ]
 
-AUTHENTICATION_BACKENDS = [
-    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    'axes.backends.AxesBackend',
+# AUTHENTICATION_BACKENDS = [
+#     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+#     'axes.backends.AxesBackend',
 
-    # Django ModelBackend is the default authentication backend.
-    'django.contrib.auth.backends.ModelBackend',
-]
+#     # Django ModelBackend is the default authentication backend.
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 ROOT_URLCONF = 'programacao_e_seguranca.urls'
 
@@ -151,13 +149,13 @@ django_heroku.settings(locals())
 
 # Lock - Login
 # django-axes > https://django-axes.readthedocs.io/en/latest/2_installation.html
-AXES_CACHE = 'axes'
-AXES_FAILURE_LIMIT = 3
-AXES_COOLOFF_TIME = datetime.timedelta(days=0, seconds=90, microseconds=0)
-AXES_LOCKOUT_TEMPLATE = 'lock.html'
-AXES_LOCK_OUT_AT_FAILURE = True
-AXES_RESET_ON_SUCCESS = True
+# AXES_CACHE = 'axes'
+# AXES_FAILURE_LIMIT = 3
+# AXES_COOLOFF_TIME = datetime.timedelta(days=0, seconds=90, microseconds=0)
+# AXES_LOCKOUT_TEMPLATE = 'lock.html'
+# AXES_LOCK_OUT_AT_FAILURE = True
+# AXES_RESET_ON_SUCCESS = True
 
-# Se 'True' permitirá tentivas de outros usuários no mesmo IP. 
-# Se 'False' irá bloquear para qualquer nova tentativa de acesso no IP.
-AXES_ONLY_USER_FAILURES = True
+# # Se 'True' permitirá tentivas de outros usuários no mesmo IP. 
+# # Se 'False' irá bloquear para qualquer nova tentativa de acesso no IP.
+# AXES_ONLY_USER_FAILURES = True
