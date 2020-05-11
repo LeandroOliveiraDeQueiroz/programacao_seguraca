@@ -27,8 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_NAME = 'ipg'
+# Secure
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_NAME = 'ipg'
+SESSION_COOKIE_HTTPONLY = False
+
+
+
 
 # Application definition
 
@@ -39,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'user',
 ]
 
