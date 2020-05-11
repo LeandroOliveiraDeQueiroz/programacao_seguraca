@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, password_validation as validator
 def login(request):
     context = {
         'title':'Broken Authentication and Session Management',
-        'page' : 'Login Page',
+        'page' : 'Login',
         'status': 'OK',
         'username' : '',
         'password' : '',
@@ -22,7 +22,7 @@ def login(request):
         if form.is_valid():
             username = context['username'] = form.cleaned_data['username']
             password = context['password'] = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
+            user = authenticate(request=request, username=username, password=password)
 
             if user is not None:
                 # context['status'] = 'Logged'
@@ -35,7 +35,7 @@ def login(request):
 def sign_up(request):
     context = {
                 'title':'Broken Authentication and Session Management',
-                'page' : 'Sign Up Page',
+                'page' : 'Sign Up',
                 'status': 'OK',
                 'password_too_short' : False,
                 'password_too_common': False,

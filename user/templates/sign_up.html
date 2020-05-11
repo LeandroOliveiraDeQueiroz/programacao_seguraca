@@ -8,11 +8,11 @@
     </head>
     <body>
         <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
-        <h1 id="title" >{{ title }}</h1>
-        <h2>{{page}}</h2>
+        <h2 id="title" >{{ title }}</h2>
         {% comment %} <h3>{{status}}</h3> {% endcomment %}
         <div>
             <form id="form" method="post">
+                <h3>{{page}}</h3>
                 {% csrf_token %}
                 <div>
                     <label>User: </label>
@@ -49,6 +49,8 @@
                 </div>
                 <div>
                     <input type="submit" value="Sign in"></input>
+                    <br><br>
+                    <a href="{% url 'login' %}"><small>Login</small></a>
                 </div>
             </form>
         </div>

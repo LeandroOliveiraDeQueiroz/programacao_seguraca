@@ -8,12 +8,12 @@
     </head>
     <body>
         <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
-        <h1 id="title">{{ title }}</h1>
-        <h2>{{page}}</h2>
+        <h2 id="title">{{ title }}</h2>
         {% comment %} <h3>{{status}}</h3> {% endcomment %}
         <div>
             {% comment %} o action no form nao e' necessa'rio porque o post e' para a mesmas URL {% endcomment %}
             <form id="form" method="post">
+                <h3>{{page}}</h3>
                 {% csrf_token %}
                 <div class="fieldContent">
                     <label>User: </label>
@@ -31,8 +31,11 @@
                 </div>
                 <div>
                     <input type="submit" value="Login"></input>
+                    <br><br>
+                    <a href="{% url 'signup' %}"><small>Sign up</small></a>
                 </div>
             </form>
+
         </div>
     </body>
 </html>

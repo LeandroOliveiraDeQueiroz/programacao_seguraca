@@ -1,0 +1,52 @@
+{% load usertags %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Login</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
+        <h2 id="title">{{ title }}</h2>
+        <h3>{{page}}</h3>
+        {% comment %} <h3>{{status}}</h3> {% endcomment %}
+        <div>
+            {% if not user.is_authenticated %}
+			<div class="alert alert-warning" role="alert">
+				<p style="text-align: center;">{{ username|axes_message |safe}}</p>
+			</div>
+
+			<p style="text-align: center;">"Estamos te redirecionando em"<b id="id_counter"></b> ... <a id="id_link_redirect" href="{% url 'login' %}"></a></p>
+			{% endif %}
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var timeleft = 5;
+                var timeend = timeleft * 1000
+                document.getElementById("id_counter").append(timeleft)
+                // https://stackoverflow.com/a/31106382/802542
+                // countdown
+                var downloadTimer = setInterval(function(){
+                timeleft--;
+                document.getElementById("id_counter").textContent = timeleft;
+                if(timeleft <= 0)
+                    clearInterval(downloadTimer);
+                },1000);
+                // clica no link
+                setTimeout(function() {
+                document.getElementById("id_link_redirect").click()
+                }, timeend)
+              })
+            </script>
+
+
+
+    </body>
+</html>
+
+
