@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Login</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
+        <h1 id="title" >{{ title }}</h1>
+        <h2>{{page}}</h2>
+        <h3>É necessário logar para acessar a página</h3>
+    </body>
+</html>

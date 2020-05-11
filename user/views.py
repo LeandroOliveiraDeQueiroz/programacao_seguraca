@@ -2,9 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import UserForm
 from django.contrib.auth.models import User
-'''from django import forms'''
-from django.contrib.auth import authenticate, password_validation as validator
-
+from django.contrib.auth import authenticate, login as user_login, password_validation as validator
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def login(request):
@@ -25,7 +24,8 @@ def login(request):
             user = authenticate(request=request, username=username, password=password)
 
             if user is not None:
-                # context['status'] = 'Logged'
+                user_login(request, user)
+                # request.session.save()
                 return HttpResponseRedirect('/loged/')
             else:
                 context['status'] = 'authenticate_fail'
@@ -71,5 +71,9 @@ def sign_up(request):
 
     return render(request, 'sign_up.html', context)
 
+@login_required(login_url='/forbidden/')
 def loged(request):
-    return(HttpResponse("BATATA"))
+    return render(request, 'index.html')
+
+def forbidden(request):
+    return render(request, 'forbidden.html')
