@@ -34,7 +34,7 @@ def login(request):
 
 def sign_up(request):
     context = {
-                'title':'Broken Authentication and Section',
+                'title':'Broken Authentication and Session Management',
                 'page' : 'Sign Up Page',
                 'status': 'OK',
                 'password_too_short' : False,
