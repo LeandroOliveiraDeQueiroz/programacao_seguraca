@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, password_validation as validator
 # Create your views here.
 def login(request):
     context = {
-        'title':'Broken Authentication and Section',
+        'title':'Broken Authentication and Session Management',
         'page' : 'Login Page',
         'status': 'OK',
         'username' : '',
