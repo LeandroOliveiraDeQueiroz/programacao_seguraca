@@ -18,6 +18,15 @@
                     <label>User: </label>
                     <input name="username" type="text" id="username" value="{{username}}" maxlength="200" required></input>
                     <div style="height: 20px;">
+                        {% if status == "username_already_exists" %}
+                            <p class="errorMensage">Esse usuário já existe</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input name="password" type="password" id="password" value="{{password}}" maxlength="200" required></input>
+                    <div style="height: 20px;">
                         {% if status == "validation_error" %}
                             {% if password_entirely_numeric %}
                                 <p class="errorMensage">Senha inteiramente númerica</p>
@@ -26,15 +35,6 @@
                             {% elif password_too_common %}
                                 <p class="errorMensage">Senha muito comum</p>
                             {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input name="password" type="password" id="password" value="{{password}}" maxlength="200" required></input>
-                    <div style="height: 20px;">
-                        {% if status == "username_already_exists" %}
-                            <p class="errorMensage">Esse usuário já existe</p>
                         {% endif %}
                     </div>
                 </div>
