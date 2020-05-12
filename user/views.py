@@ -37,9 +37,6 @@ def sign_up(request):
                 'title':'Broken Authentication and Session Management',
                 'page' : 'Sign Up',
                 'status': 'OK',
-                # 'password_too_short' : False,
-                # 'password_too_common': False,
-                # 'password_entirely_numeric': False,
                 'username' : '',
                 'password' : '',
                 'password_confirm' : '',
@@ -51,9 +48,6 @@ def sign_up(request):
             username = context['username'] = form.cleaned_data['username']
             password = context['password'] = form.cleaned_data['password']
             password_confirm = context['password_confirm'] = form.cleaned_data['password_confirm']
-
-            #try:
-                # validator.validate_password(password)
             
             if password == password_confirm:
                 try:
@@ -63,11 +57,6 @@ def sign_up(request):
                     context['status'] = "username_already_exists"
             else :
                 context['status'] = "different_passwords"
-
-            # except validator.ValidationError as e:
-            #         context['status'] = "validation_error"
-            #         for error in e.error_list:
-            #             context[error.code] = True
 
     return render(request, 'sign_up.html', context)
 
