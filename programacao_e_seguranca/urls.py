@@ -24,4 +24,5 @@ urlpatterns = [
     path('signup/', views.sign_up, name='signup'),
     path('loged/', views.loged, name='loged'),
     path('forbidden/', views.forbidden, name='forbidden'),
+    path('show-totpdevice/', views.show_totpdevice, name='show_totpdevice'),
 ]

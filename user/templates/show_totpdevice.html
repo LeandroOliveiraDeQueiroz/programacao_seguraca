@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>TOTP Device</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
+        <h2 id="title" >{{ title }}</h2>
+        <h3>2º fator de autenticação de: {{username}}</h3>
+        
+        <div>
+            <p class="content authenticateMessage">Para logar é necessário dupla autenticação. Nós sugerimos o Google Authenticator para smartphone:</p>
+            <div class="content links">
+                <ul style="width: fit-content;">
+                    <li><a href="https://support.google.com/accounts/answer/1066447">Suporte</a></li>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">Play Store</a></li>
+                    <li><a href="https://apps.apple.com/app/google-authenticator/id388497605">Aple Store</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top:125px; margin-bottom: 300px;">
+            <div class="content">
+                <div class="cadastro">
+                    <p>Cadastro por QRCode:</p>
+                    <div>
+                        {% comment %} {{qrcode}} {% endcomment %}
+                        {% comment %} <img width="200" height="200" src="/admin/otp_totp/totpdevice/{{device_id}}/qrcode/"> {% endcomment %}
+                        <img width="150" height="150" src="{% static 'qr.PNG' %}">
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="cadastro"> 
+                    <p>Cadastro Manual:</p>
+                    <p>Nome da conta: {{device_name}}</p>
+                    <p>Chave: {{device_key}}</p>
+                    <p>Tipo chave: {{device_key_type}}</p>
+                </div>
+            </div>
+        </div>
+
+        <a style="margin-top:125px" href="{% url 'login' %}"><small>Login</small></a>
+    </body>
+</html>

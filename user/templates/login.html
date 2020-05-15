@@ -9,23 +9,28 @@
     <body>
         <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
         <h2 id="title">{{ title }}</h2>
+        <h3>{{page}}</h3>
         {% comment %} <h3>{{status}}</h3> {% endcomment %}
         <div>
             {% comment %} o action no form nao e' necessa'rio porque o post e' para a mesmas URL {% endcomment %}
             <form id="form" method="post">
-                <h3>{{page}}</h3>
                 {% csrf_token %}
                 <div class="fieldContent">
                     <label>User: </label>
                     {% comment %} E' o name é utilizado na identificao do request na view {% endcomment %}
                     <input name="username" type="text" id="username" value="{{ username }}" required></input>
                 </div>
-                <div>
+                <div class="fieldContent">
                     <label>Password: </label>
+                    {% comment %} E' o name é utilizado na identificao do request na view {% endcomment %}
                     <input name="password" type="password" id="password" value="{{ password }}" required></input>
-                    <div style="height: 20px;">
+                </div>
+                <div>
+                    <label>TOTP Token: </label>
+                    <input name="totp_token" type="text" id="totp_token" value="{{ totp_token }}" required></input>
+                    <div style="height: 40px;">
                         {% if status == "authenticate_fail" %}
-                            <p class="errorMensage">Usuário ou senha incorreta</p>
+                            <p class="errorMensage">Usuário ou senha ou TOTP Token incorretos</p>
                         {% endif %}
                     </div>
                 </div>

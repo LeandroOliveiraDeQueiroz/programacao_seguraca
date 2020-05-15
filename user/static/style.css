@@ -18,3 +18,37 @@ body {
     font-size: 12px;
     margin: 0;
 }
+
+
+/* #cadastroQRCode { */
+    /* width: 95%; */
+    /* position: relative; */
+    /* left: 0px; */
+    /* float: left; */
+    /* border: solid; */
+/* } */
+
+.content {
+    position: relative;
+    width: 50%;
+    float: left;
+}
+
+.authenticateMessage {
+    width: 50%;
+    text-align: center;
+}
+
+.links {
+    width: 50%;
+    text-align: center;
+}
+
+/* Diminiur width para diminuir a largura dos retangulos */
+.cadastro {
+    /* position: relative; */
+    width: 95%;
+    /* float: left; */
+    /* text-align: center; */
+    border: solid;
+}

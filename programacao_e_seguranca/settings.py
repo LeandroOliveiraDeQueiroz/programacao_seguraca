@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'axes',
     'user',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
+    'django_otp.middleware.OTPMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
