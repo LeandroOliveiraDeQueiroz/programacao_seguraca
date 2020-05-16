@@ -44,6 +44,8 @@ def login(request):
 
                 if device != None:
                     verify = device.verify_token(totp_token)
+                    print(verify)
+
                     if verify:                    
                         user_login(request, user)
                         return HttpResponseRedirect('/loged/')
