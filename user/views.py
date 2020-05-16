@@ -77,6 +77,7 @@ def sign_up(request):
                 if password == password_confirm:
                     try:
                         user = User.objects.create_user(username=username, email='', password=password, first_name='', last_name='')
+                        print("batata")
                         device = user.totpdevice_set.create(name="IPG_" + username, confirmed=True)
                         # TODO AMANDA Quero passar o device.config_url para a view que vai receber o redirect
                         # A linha de baixo é muito errado de fazer?
