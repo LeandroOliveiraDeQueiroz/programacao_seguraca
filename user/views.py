@@ -26,18 +26,27 @@ def login(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
 
+        print("Antes do form")
+        print(form)
+
         if form.is_valid():
             username = context['username'] = form.cleaned_data['username']
             password = context['password'] = form.cleaned_data['password']
             totp_token = context['totp_token'] = form.cleaned_data['totp_token']
             user = authenticate(request=request, username=username, password=password)
 
+            print("Depois do Form")
+            print(totp_token)
+
             if user is not None:
                 device = get_user_totp_device(user, confirmed=True)
-                if not device == None and device.verify_token(totp_token):
-                    user_login(request, user)
-                    return HttpResponseRedirect('/loged/')
-                
+                print(device)
+
+                if device != None:
+                    verify = device.verify_token(totp_token)
+                    if verify:                    
+                        user_login(request, user)
+                        return HttpResponseRedirect('/loged/')
                 else:
                     context['status'] = 'authenticate_fail'
             else:
