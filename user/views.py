@@ -77,19 +77,20 @@ def sign_up(request):
                 if password == password_confirm:
                     try:
                         user = User.objects.create_user(username=username, email='', password=password, first_name='', last_name='')
-                        print("batata")
+                        print("usuário criado")
                         device = user.totpdevice_set.create(name="IPG_" + username, confirmed=True)
                         # TODO AMANDA Quero passar o device.config_url para a view que vai receber o redirect
                         # A linha de baixo é muito errado de fazer?
                         # request.session['device_id'] = device.id
                         # request.session["device"] = device
+                        print("device criado")
                         request.session["username"] = username
                         request.session["device_config_url"] = device.config_url
                         request.session["device_id"] = device.id
                         # request.session["device_name"] = device.name
                         # request.session["device_key"] = device.key
                         request.session["device_key_type"] = "Baseada no horário"
-
+                        print("Session utilizada")
                         return HttpResponseRedirect('/show-totpdevice/')
                     except:
                         context['status'] = "username_already_exists"
