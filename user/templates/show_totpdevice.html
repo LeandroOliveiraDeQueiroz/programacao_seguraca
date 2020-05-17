@@ -26,9 +26,7 @@
                 <div class="cadastro">
                     <p>Cadastro por QRCode:</p>
                     <div>
-                        {% comment %} {{qrcode}} {% endcomment %}
-                        {% comment %} <img width="200" height="200" src="/admin/otp_totp/totpdevice/{{device_id}}/qrcode/"> {% endcomment %}
-                        <img width="150" height="150" src="{% static 'qr.PNG' %}">
+                        <img width="150" height="150" src="{{ qr }}">
                     </div>
                 </div>
             </div>

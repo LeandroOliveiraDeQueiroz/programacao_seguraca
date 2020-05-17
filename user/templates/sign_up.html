@@ -10,7 +10,6 @@
         <img src="{% static 'logotipo_ipg.jpg' %}" alt="IPG Logo"></img>
         <h2 id="title" >{{ title }}</h2>
         <h3>{{page}}</h3>
-        {% comment %} <h3>{{status}}</h3> {% endcomment %}
         <div>
             <form id="form" method="post">
                 {% csrf_token %}

@@ -1,13 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import UserForm
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as user_login, password_validation as validator
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+from .forms import UserForm
+from user.models import QRCode
 
 #2FA Two Factor Authentication
 from django_otp import devices_for_user
 from django_otp.plugins.otp_totp.models import TOTPDevice
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
+
 from urllib.parse import urlparse, parse_qs
 import qrcode
 import base64
@@ -26,29 +31,18 @@ def login(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
 
-        print("Antes do form")
-        print(form)
-
         if form.is_valid():
             username = context['username'] = form.cleaned_data['username']
             password = context['password'] = form.cleaned_data['password']
             totp_token = context['totp_token'] = form.cleaned_data['totp_token']
             user = authenticate(request=request, username=username, password=password)
 
-            print("Depois do Form")
-            print(totp_token)
-
             if user is not None:
                 device = get_user_totp_device(user, confirmed=True)
-                print(device)
 
-                if device != None:
-                    verify = device.verify_token(totp_token)
-                    print(verify)
-
-                    if verify:                    
-                        user_login(request, user)
-                        return HttpResponseRedirect('/loged/')
+                if device != None and device.verify_token(totp_token):                  
+                    user_login(request, user)
+                    return HttpResponseRedirect('/loged/')
                 else:
                     context['status'] = 'authenticate_fail'
             else:
@@ -73,7 +67,7 @@ def sign_up(request):
         'username' : '',
         'password' : '',
         'password_confirm' : '',
-        }
+    }
     if request.method == 'POST':
         form = UserForm(request.POST)
 
@@ -88,20 +82,14 @@ def sign_up(request):
                 if password == password_confirm:
                     try:
                         user = User.objects.create_user(username=username, email='', password=password, first_name='', last_name='')
-                        print("usuário criado")
                         device = user.totpdevice_set.create(name="IPG_" + username, confirmed=True)
-                        # TODO AMANDA Quero passar o device.config_url para a view que vai receber o redirect
-                        # A linha de baixo é muito errado de fazer?
-                        # request.session['device_id'] = device.id
-                        # request.session["device"] = device
-                        print("device criado")
+
                         request.session["username"] = username
+                        request.session["user_id"] = user.id
                         request.session["device_config_url"] = device.config_url
                         request.session["device_id"] = device.id
-                        # request.session["device_name"] = device.name
-                        # request.session["device_key"] = device.key
                         request.session["device_key_type"] = "Baseada no horário"
-                        print("Session utilizada")
+
                         return HttpResponseRedirect('/show-totpdevice/')
                     except:
                         context['status'] = "username_already_exists"
@@ -125,18 +113,15 @@ def forbidden(request):
 
 def show_totpdevice(request):
     
-    if(request.session and request.session.get("device_config_url") and request.session.get("device_key_type")):
+    if(request.session and request.session.get("device_config_url") and 
+        request.session.get("device_key_type") and request.session.get("user_id")):
 
         url = urlparse(request.session["device_config_url"])
         query = parse_qs(url.query)
 
-
         qr = qrcode.make(request.session["device_config_url"])
-        qr.save("user/static/qr.PNG")
-
-        # qrcode = get_qrcode_base64(request.session["device_config_url"])
-
-        # t = my_view(request.session["device_config_url"])
+        qrcode_image = QRCode.objects.create(user_id=request.session["user_id"], 
+            url= request.session["device_config_url"], qrcode= convert_to_file(qr))
 
         context = {
             'title':'Broken Authentication and Session Management',
@@ -146,30 +131,20 @@ def show_totpdevice(request):
             'device_name': url.path[1:],
             'device_key': query['secret'][0],
             'device_key_type': request.session["device_key_type"],
-            # 'qrcode': "/static/qr.PNG",
             'device_id': request.session["device_id"],
+            'qr': qrcode_image.qrcode.url
         }
+
+        request.session.clear()
+
         return render(request, 'show_totpdevice.html', context)
     else:
-        return render(request, 'forbidden.html')
-    
-from django.http import HttpResponse
+        return HttpResponseRedirect('/forbidden/')
 
-def my_view(config_url):
+def convert_to_file(qr):
+    qr_io = io.BytesIO()
+    qr.save(qr_io, format='JPEG')
+    qr_io.seek(0)
+    qr_file = InMemoryUploadedFile(qr_io, None, 'qr.jpg', 'image/jpeg',qr_io.getbuffer().nbytes, None)
 
-    qr = qrcode.make(config_url)
-    
-
-    response = HttpResponse(content_type='image/png')
-
-    # image.save(response, "JPEG")
-    qr.save(response, "PNG")
-
-    return response
-
-
-def get_qrcode_base64(url):
-    buffer = io.StringIO()
-    qr = qrcode.make(url)
-    qr.save(buffer, "PNG")
-    return (base64.b64encode(buffer.getvalue()))
+    return qr_file
