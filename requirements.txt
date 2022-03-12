@@ -11,4 +11,4 @@ django-extensions==2.2.8
 plotly==4.7.1
 django-otp==0.9.1
 qrcode==6.1
-pillow==7.1.2
+pillow==9.0.1
